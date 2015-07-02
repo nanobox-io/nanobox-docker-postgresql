@@ -46,7 +46,7 @@ end
 
 template '/etc/service/db/run' do
   mode 0755
-  variables ({ exec: "ulimit -n 10240 && /data/bin/pg_ctl -D /datas -w -l /var/log/postgresql.log start" })
+  variables ({ exec: "ulimit -n 10240 && /data/bin/pg_ctl -D /datas -w -l /var/log/postgresql.log start 2>&1" })
 end
 
 # Wait for server to start
@@ -71,4 +71,21 @@ execute 'grant all to nanobox user on gonano' do
   command "/data/bin/psql -c \"GRANT ALL PRIVILEGES ON DATABASE gonano TO nanobox\""
   user 'gonano'
   not_if { `/data/bin/psql -U gonano -t -c "SELECT * FROM has_database_privilege('nanobox', 'gonano', 'create');"`.to_s.strip == 't' }
+end
+
+# Configure narc
+template '/opt/gonano/etc/narc.conf' do
+  variables ({ uid: payload[:uid], app: "nanobox", logtap: payload[:logtap_uri] })
+end
+
+directory '/etc/service/narc'
+
+file '/etc/service/narc/run' do
+  mode 0755
+  content <<-EOF
+#!/bin/sh -e
+export PATH="/opt/local/sbin:/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/gonano/sbin:/opt/gonano/bin"
+
+exec /opt/gonano/bin/narcd /opt/gonano/etc/narc.conf
+  EOF
 end
