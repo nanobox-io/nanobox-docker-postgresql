@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/opt/gonano/bin/hookit stop "${1}"
+
