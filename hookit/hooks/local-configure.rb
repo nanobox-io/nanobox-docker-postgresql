@@ -46,7 +46,7 @@ end
 
 template '/etc/service/db/run' do
   mode 0755
-  variables ({ exec: "ulimit -n 10240 && /data/bin/pg_ctl -D /datas -w -l /var/log/postgresql.log start 2>&1" })
+  variables ({ exec: "ulimit -n 10240 && /data/bin/pg_ctl -D /datas -w -l /var/log/pgsql/pgsql.log start 2>&1" })
 end
 
 # Wait for server to start
