@@ -24,9 +24,16 @@ Vagrant.configure(2) do |config|
 
   # Build image
   config.vm.provision "shell", inline: "docker build -t #{ENV['docker_user']}/postgresql /vagrant"
+  # config.vm.provision "shell", inline: "docker build -t #{ENV['docker_user']}/postgresql:9.3 -f Dockerfile-9_3 /vagrant"
+
+  # Tag built images
+  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4"
+  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4-stable"
 
   # Publish image to dockerhub
   config.vm.provision "shell", inline: "docker push #{ENV['docker_user']}/postgresql"
+  config.vm.provision "shell", inline: "docker push #{ENV['docker_user']}/postgresql:9.4"
+  config.vm.provision "shell", inline: "docker push #{ENV['docker_user']}/postgresql:9.4-stable"
 
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", "1024"]
