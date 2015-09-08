@@ -1,5 +1,5 @@
 
 service 'db' do
   action :disable
-  init 'runit'
+  init :runit
 end
