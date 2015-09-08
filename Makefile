@@ -15,15 +15,15 @@ else
 endif
 
 push_94_stable:
-  vagrant ssh -c "docker push nanobox/postgresql"
-  vagrant ssh -c "docker push nanobox/postgresql:9.4"
-  vagrant ssh -c "docker push nanobox/postgresql:9.4-stable"
+	vagrant ssh -c "sudo docker push nanobox/postgresql"
+	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4"
+	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-stable"
 
 push_94_beta:
-  vagrant ssh -c "docker push nanobox/postgresql:9.4-beta"
+	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-beta"
 
 push_94_alpha:
-  vagrant ssh -c "docker push nanobox/postgresql:9.4-alpha"
+	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-alpha"
 
 clean:
 	vagrant destroy -f
