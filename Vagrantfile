@@ -22,22 +22,6 @@ Vagrant.configure(2) do |config|
   # Add docker credentials
   config.vm.provision "file", source: "~/.dockercfg", destination: "/root/.dockercfg"
 
-  # Build image
-  config.vm.provision "shell", inline: "docker build -t #{ENV['docker_user']}/postgresql /vagrant"
-  # 9.3
-  # config.vm.provision "shell", inline: "docker build -t #{ENV['docker_user']}/postgresql:9.3 -f Dockerfile-9_3 /vagrant"
-
-  # Tag built images
-  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4"
-  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4-stable"
-  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4-beta"
-  config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql #{ENV['docker_user']}/postgresql:9.4-alpha"
-  # 9.3
-  # config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql:9.3 #{ENV['docker_user']}/postgresql:9.3-stable"
-  # config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql:9.3 #{ENV['docker_user']}/postgresql:9.3-beta"
-  # config.vm.provision "shell", inline: "docker tag #{ENV['docker_user']}/postgresql:9.3 #{ENV['docker_user']}/postgresql:9.3-alpha"
-
-
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", "1024"]
   end

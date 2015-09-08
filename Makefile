@@ -1,29 +1,34 @@
-all: image
-
 image:
-ifdef docker_user
-	vagrant up
-else
-	export docker_user='nanobox' && vagrant up
-endif
+	@vagrant up
+	@vagrant ssh -c "sudo docker build -t nanobox/postgresql /vagrant"
+
+# image_93:
+# 	@vagrant up
+# 	@vagrant ssh -c "sudo docker build -t nanobox/postgresql:9.3 -f Dockerfile-9_3 /vagrant"
+
+tag:
+	@vagrant ssh -c "sudo docker tag nanobox/postgresql nanobox/postgresql:9.4"
+	@vagrant ssh -c "sudo docker tag nanobox/postgresql nanobox/postgresql:9.4-stable"
+	@vagrant ssh -c "sudo docker tag nanobox/postgresql nanobox/postgresql:9.4-beta"
+	@vagrant ssh -c "sudo docker tag nanobox/postgresql nanobox/postgresql:9.4-alpha"
+
+all: image tag
 
 publish:
-ifdef docker_user
-	vagrant provision
-else
-	export docker_user='nanobox' && vagrant provision
-endif
+	@vagrant ssh -c "sudo docker push nanobox/postgresql"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-stable"
 
 push_94_stable:
-	vagrant ssh -c "sudo docker push nanobox/postgresql"
-	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4"
-	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-stable"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-stable"
 
 push_94_beta:
-	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-beta"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-beta"
 
 push_94_alpha:
-	vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-alpha"
+	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-alpha"
 
 clean:
-	vagrant destroy -f
+	@vagrant destroy -f
