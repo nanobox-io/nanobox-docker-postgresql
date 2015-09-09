@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "file", source: "~/.dockercfg", destination: "/root/.dockercfg"
 
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", "1024"]
+    v.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on", "--cpus", "2"]
   end
 
 end
