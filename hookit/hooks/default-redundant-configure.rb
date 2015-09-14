@@ -2,7 +2,7 @@
 include Hooky::Postgresql
 
 # Setup
-boxfile = converge( BOXFILE_DEFAULTS, payload[:boxfile] ) 
+boxfile = converge( BOXFILE_DEFAULTS, payload[:boxfile] )
 
 # configure yoke.ini
 template '/data/etc/yoke.ini' do

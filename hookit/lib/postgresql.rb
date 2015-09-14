@@ -10,7 +10,7 @@ module Hooky
 
     def sanitize_env_vars(payload)
       vars = payload[:environment_variables]
-      
+
       # now lets enable any backwards compatible vars
       vars.inject({}) do |res, (key, val)|
         if /^DATABASE(\d+)_(.+)$/.match key

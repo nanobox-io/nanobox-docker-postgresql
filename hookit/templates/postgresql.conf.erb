@@ -1,4 +1,4 @@
-<% memory = payload[:member][:schema][:meta][:ram].to_i / 1048576-%>
+<% memory = memcap -%>
 listen_addresses = '0.0.0.0'
 port = 5432
 max_connections =  <%= ((memory / 128) * 200).ceil %>
