@@ -1,3 +1,4 @@
+# `Dockerfile` with no additions/extensions is effectively the 'latest' or default version offered
 FROM nanobox/runit
 
 # Create directories

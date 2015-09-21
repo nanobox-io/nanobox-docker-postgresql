@@ -20,9 +20,9 @@ syslog-facility local0
 # server #
 ##########
 
-# remote syslog 
-remote-host <%= logtap.split(':').first %>
-remote-port <%= logtap.split(':').last %>
+# remote syslog
+remote-host <%= logtap %>
+remote-port 514
 remote-proto udp
 
 # max server connect attempts

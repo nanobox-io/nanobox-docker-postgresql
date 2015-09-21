@@ -22,14 +22,8 @@ Vagrant.configure(2) do |config|
   # Add docker credentials
   config.vm.provision "file", source: "~/.dockercfg", destination: "/root/.dockercfg"
 
-  # Build image
-  config.vm.provision "shell", inline: "docker build -t #{ENV['docker_user']}/postgresql /vagrant"
-
-  # Publish image to dockerhub
-  config.vm.provision "shell", inline: "docker push #{ENV['docker_user']}/postgresql"
-
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--memory", "1024"]
+    v.customize ["modifyvm", :id, "--memory", "1024", "--ioapic", "on", "--cpus", "2"]
   end
 
 end
