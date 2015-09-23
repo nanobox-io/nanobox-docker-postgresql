@@ -13,7 +13,7 @@ RUN echo "http://pkgsrc.nanobox.io/nanobox/base/Linux/" > /data/etc/pkgin/reposi
 RUN mkdir -p /data/var/db && \
     /data/sbin/pkg_admin rebuild && \
     rm -rf /data/var/db/pkgin && /data/bin/pkgin -y up && \
-    /data/bin/pkgin -y in postgresql94-server # postgresql94-datatypes postgresql94-fuzzystrmatch postgresql94-pgcrypto
+    /data/bin/pkgin -y in yoke postgresql94-server # postgresql94-datatypes postgresql94-fuzzystrmatch postgresql94-pgcrypto
 
 # Cleanup disk
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /data/var/db/pkgin
