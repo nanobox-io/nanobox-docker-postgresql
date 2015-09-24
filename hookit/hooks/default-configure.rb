@@ -74,8 +74,9 @@ template '/etc/service/db/run' do
 end
 
 # Wait for server to start
-until File.exists?( "/tmp/.s.PGSQL.5432" )
-   sleep( 1 )
+ensure_socket 'db' do
+  port '(4400|5432)'
+  action :listening
 end
 
 if payload[:platform] == 'local'
