@@ -12,6 +12,10 @@ end
 # Setup
 boxfile = converge( BOXFILE_DEFAULTS, payload[:boxfile] )
 
+execute 'generate locale' do
+  command "locale-gen #{boxfile[:locale]} && update-locale"
+end
+
 directory '/datas'
 
 # chown datas for gonano

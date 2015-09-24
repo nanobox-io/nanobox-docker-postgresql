@@ -6,6 +6,7 @@ module Hooky
       # global settings
       before_deploy:                       {type: :array, of: :string, default: []},
       after_deploy:                        {type: :array, of: :string, default: []},
+      locale:                              {type: :string, default: 'en_US.UTF-8'},
     }
 
     def sanitize_env_vars(payload)
