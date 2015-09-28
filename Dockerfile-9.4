@@ -12,17 +12,17 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
       yoke \
-      postgresql94-server
+      postgresql94-server && \
       # postgresql94-datatypes \
       # postgresql94-fuzzystrmatch \
       # postgresql94-pgcrypto
+    rm -rf /data/var/db/pkgin/cache
 
 # Cleanup disk
 RUN rm -rf \
       /var/lib/apt/lists/* \
       /tmp/* \
-      /var/tmp/* \
-      /data/var/db/pkgin/cache
+      /var/tmp/*
 
 # Run runit automatically
 CMD /opt/gonano/bin/nanoinit
