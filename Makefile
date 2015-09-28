@@ -1,37 +1,28 @@
-image:
-	@vagrant up
-	@vagrant ssh -c "sudo docker build -t nanobox/postgresql /vagrant"
+all: build publish
 
-# image_93:
-# 	@vagrant up
-# 	@vagrant ssh -c "sudo docker build -t nanobox/postgresql:9.3 -f Dockerfile-9_3 /vagrant"
+LATEST:=9.4
+stability?=latest
+version?=$(LATEST)
+dockerfile?=Dockerfile-$(version)
 
-tag:
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:9.4"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:9.4-stable"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:9.4-beta"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:9.4-alpha"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:stable"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:beta"
-	@vagrant ssh -c "sudo docker tag -f nanobox/postgresql nanobox/postgresql:alpha"
+login:
+	@vagrant ssh -c "docker login"
 
-all: image tag
+build:
+	@echo "Building 'postgresql' image..."
+	@vagrant ssh -c "docker build -f /vagrant/Dockerfile-${version} -t nanobox/postgresql /vagrant"
 
-publish: push_94_stable
-
-push_94_stable: push_94_beta
-	@vagrant ssh -c "sudo docker push nanobox/postgresql"
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4"
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-stable"
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:stable"
-
-push_94_beta: push_94_alpha
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-beta"
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:beta"
-
-push_94_alpha:
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:9.4-alpha"
-	@vagrant ssh -c "sudo docker push nanobox/postgresql:alpha"
+publish:
+	@echo "Tagging 'postgresql:${version}-${stability}' image..."
+	@vagrant ssh -c "docker tag -f nanobox/postgresql nanobox/postgresql:${version}-${stability}"
+	@echo "Publishing 'postgresql:${version}-${stability}'..."
+	@vagrant ssh -c "docker push nanobox/postgresql:${version}-${stability}"
+ifeq ($(version),$(LATEST))
+	@echo "Publishing 'postgresql:${stability}'..."
+	@vagrant ssh -c "docker tag -f nanobox/postgresql nanobox/postgresql:${stability}"
+	@vagrant ssh -c "docker push nanobox/postgresql:${stability}"
+endif
 
 clean:
-	@vagrant destroy -f
+	@echo "Removing all images..."
+	@vagrant ssh -c "for image in $(docker images -q); do docker rmi -f $image; done"

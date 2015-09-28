@@ -1,0 +1,28 @@
+FROM nanobox/runit
+
+# Create directories
+RUN mkdir -p /var/log/gonano
+
+# Copy files
+ADD hookit/. /opt/gonano/hookit/mod/
+ADD files/. /
+
+# Install binaries
+RUN rm -rf /data/var/db/pkgin && \
+    /data/bin/pkgin -y up && \
+    /data/bin/pkgin -y in \
+      yoke \
+      postgresql94-server
+      # postgresql94-datatypes \
+      # postgresql94-fuzzystrmatch \
+      # postgresql94-pgcrypto
+
+# Cleanup disk
+RUN rm -rf \
+      /var/lib/apt/lists/* \
+      /tmp/* \
+      /var/tmp/* \
+      /data/var/db/pkgin/cache
+
+# Run runit automatically
+CMD /opt/gonano/bin/nanoinit
