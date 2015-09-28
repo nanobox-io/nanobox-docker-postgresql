@@ -1,3 +1,5 @@
+# -*- mode: make; tab-width: 4; -*-
+# vim: ts=4 sw=4 ft=make noet
 all: build publish
 
 LATEST:=9.4
