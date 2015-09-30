@@ -72,9 +72,26 @@ template '/etc/service/db/log/run' do
   variables ({ svc: "db" })
 end
 
-template '/etc/service/db/run' do
+file '/etc/service/db/run' do
   mode 0755
-  variables ({ exec: "ulimit -n 10240 && /data/bin/pg_ctl -D /datas -w -l /var/log/pgsql/pgsql.log start 2>&1" })
+  content File.read("/opt/gonano/hookit/mod/files/postgresql-run")
+end
+
+# Configure narc
+template '/opt/gonano/etc/narc.conf' do
+  variables ({ uid: payload[:uid], app: "nanobox", logtap: payload[:logtap_host] })
+end
+
+directory '/etc/service/narc'
+
+file '/etc/service/narc/run' do
+  mode 0755
+  content File.read("/opt/gonano/hookit/mod/files/narc-run")
+end
+
+# Wait for server to start
+until File.exists?( "/tmp/.s.PGSQL.5432" )
+   sleep( 1 )
 end
 
 # Wait for server to start
@@ -127,23 +144,6 @@ else
     not_if { `/data/bin/psql -U gonano -t -c "SELECT * FROM has_database_privilege('#{users[:default][:name]}', 'gonano', 'create');"`.to_s.strip == 't' }
   end
 
-end
-
-# Configure narc
-template '/opt/gonano/etc/narc.conf' do
-  variables ({ uid: payload[:uid], app: "nanobox", logtap: payload[:logtap_host] })
-end
-
-directory '/etc/service/narc'
-
-file '/etc/service/narc/run' do
-  mode 0755
-  content <<-EOF
-#!/bin/sh -e
-export PATH="/opt/local/sbin:/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/gonano/sbin:/opt/gonano/bin"
-
-exec /opt/gonano/bin/narcd /opt/gonano/etc/narc.conf
-  EOF
 end
 
 if payload[:platform] != 'local'
