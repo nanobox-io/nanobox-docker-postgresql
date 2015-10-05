@@ -38,10 +38,16 @@ ifeq ($(stability),stable)
 endif
 endif
 
-clean:
+PHONY: clean clean-project clean-runit
+
+clean: clean-runit
+
+clean-project:
 	@echo "Removing all images..."
-	@vagrant ssh -c "for image in \$$(docker images -q nanobox/${project}); do docker rmi -f \$$image; done"
+	@vagrant ssh -c "for image in \$$(docker images -q nanobox/${project} | sort | uniq); do docker rmi -f \$$image; done"
 
 clean-runit:
 	@echo "Removing all images..."
-	@vagrant ssh -c "for image in \$$(docker images -q nanobox/runit); do docker rmi -f \$$image; done"
+	@vagrant ssh -c "for image in \$$(docker images -q nanobox/runit | sort | uniq); do docker rmi -f \$$image; done"
+
+# make clean; for version in 9.3 9.4; do make clean-project; make build version=${version}; for stability in alpha beta stable; do make publish version=${version} stability=${stability}; done; done; make clean;
