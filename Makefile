@@ -46,7 +46,7 @@ clean-project:
 	@echo "Removing all images..."
 	@vagrant ssh -c "for image in \$$(docker images -q nanobox/${project} | sort | uniq); do docker rmi -f \$$image; done"
 
-clean-runit:
+clean-runit: clean-project
 	@echo "Removing all images..."
 	@vagrant ssh -c "for image in \$$(docker images -q nanobox/runit | sort | uniq); do docker rmi -f \$$image; done"
 
