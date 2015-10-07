@@ -16,11 +16,13 @@ execute 'generate locale' do
   command "locale-gen #{boxfile[:locale]} && update-locale"
 end
 
-directory '/datas'
+directory '/data/var/db/postgresql' do
+  recursive true
+end
 
-# chown datas for gonano
-execute 'chown /datas' do
-  command 'chown -R gonano:gonano /datas'
+# chown data/var/db/postgresql for gonano
+execute 'chown /data/var/db/postgresql' do
+  command 'chown -R gonano:gonano /data/var/db/postgresql'
 end
 
 directory '/var/log/pgsql' do
@@ -35,12 +37,12 @@ end
 
 execute 'rm -rf /var/pgsql'
 
-execute '/data/bin/initdb -E UTF8 /datas' do
+execute '/data/bin/initdb -E UTF8 /data/var/db/postgresql' do
   user 'gonano'
-  not_if { ::Dir.exists? '/datas/base' }
+  not_if { ::Dir.exists? '/data/var/db/postgresql/base' }
 end
 
-template '/datas/postgresql.conf' do
+template '/data/var/db/postgresql/postgresql.conf' do
   mode 0644
   variables ({
     boxfile: boxfile,
@@ -50,7 +52,7 @@ template '/datas/postgresql.conf' do
   group 'gonano'
 end
 
-template '/datas/pg_hba.conf' do
+template '/data/var/db/postgresql/pg_hba.conf' do
   mode 0600
   owner 'gonano'
   group 'gonano'
