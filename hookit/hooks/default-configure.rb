@@ -150,7 +150,7 @@ end
 
 boxfile[:extensions].each do |extension|
 
-  execute 'grant all to default user on gonano' do
+  execute 'create extension' do
     command "/data/bin/psql -c \"CREATE EXTENSION IF NOT EXISTS \\\"#{extension}\\\"\""
     user 'gonano'
   end
