@@ -1,0 +1,12 @@
+sudo: required
+cache: bundler
+
+services:
+  - docker
+
+before_install:
+  - docker build -t nanobox-io/nanobox-docker-postgresql .
+  - docker run -d -p 80:80 -p 443:443 --name nginx -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nanobox-io/nanobox-docker-postgresql
+  - echo run a fake nanobox-cli to run a bunch of hooks
+
+script: exit 1
