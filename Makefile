@@ -53,3 +53,4 @@ clean-runit: clean-project
 	@vagrant ssh -c "for image in \$$(docker images -q nanobox/runit | sort | uniq); do docker rmi -f \$$image; done"
 
 # make clean; for version in 9.3 9.4; do make clean-project; make build version=${version}; for stability in alpha beta stable; do make publish version=${version} stability=${stability}; done; done; make clean;
+# make clean; for version in 9.3 9.4; do make clean-project; make build version=${version}; for stability in alpha; do make publish version=${version} stability=${stability}; done; done; make clean;

@@ -14,10 +14,18 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
         yoke \
-        postgresql94-server && \
-        # postgresql94-datatypes \
-        # postgresql94-fuzzystrmatch \
-        # postgresql94-pgcrypto
+        postgresql94-adminpack \
+        postgresql94-datatypes \
+        postgresql94-dblink \
+        postgresql94-fuzzystrmatch \
+        postgresql94-monitoring \
+        postgresql94-pgcrypto \
+        postgresql94-plperl \
+        postgresql94-plpython \
+        postgresql94-pltcl \
+        postgresql94-replicationtools \
+        postgresql94-server \
+        postgresql94-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 
 # Cleanup disk
