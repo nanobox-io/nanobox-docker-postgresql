@@ -6,9 +6,5 @@ services:
 
 before_install:
   - docker build -t nanobox-io/nanobox-docker-postgresql -f Dockerfile-9.4 .
-  - docker run -d --name postgres0 nanobox-io/nanobox-docker-postgresql
-  - docker run -d --name postgres1 --link postgres2:postgres nanobox-io/nanobox-docker-postgresql
-  - docker run -d --name postgres2 --link postgres1:postgres nanobox-io/nanobox-docker-postgresql
-  - echo run a fake nanobox-cli to run a bunch of hooks
 
-script: exit 1
+script: tests/run.sh
