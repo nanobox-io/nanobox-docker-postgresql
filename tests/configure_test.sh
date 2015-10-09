@@ -3,6 +3,7 @@
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
 pass "unable to start the container" docker run -d --name $UUID nanobox-io/nanobox-docker-postgresql
+docker ps -a
 defer docker kill $UUID
 
 # we should be able to run the configure hook
