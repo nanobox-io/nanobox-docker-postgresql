@@ -2,9 +2,10 @@
 . `dirname $0`/util/bash_help.sh
 
 UUID=$(cat /proc/sys/kernel/random/uuid)
-pass "unable to start the container" docker run -d --name $UUID nanobox-io/nanobox-docker-postgresql
-docker ps -a
+pass "unable to start the container" docker run --privileged=true -d --name $UUID nanobox-io/nanobox-docker-postgresql
 defer docker kill $UUID
 
+docker exec $UUID ls /opt/gonano/bin/hookit
 # we should be able to run the configure hook
-pass "unable to run configure hook" docker exec $UUID /opt/bin/default-configure '{}'
+docker exec $UUID /opt/bin/default-configure '{}'
+echo $?
