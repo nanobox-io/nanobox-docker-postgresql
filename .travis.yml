@@ -1,16 +1,18 @@
 sudo: required
 
 env:
-    VERSIONS: 9.3 9.4
+    VERSION: 9.3
+    VERSION: 9.4
 
 services:
   - docker
 
 before_install:
-  - ./build.sh $VERSIONS
+  - docker build -t nanobox/nanobox-docker-postgresql:$VERSION -f Dockerfile-$VERSION .
+  - docker tag -f nanobox/nanobox-docker-postgresql:$VERSION nanobox/nanobox-docker-postgresql:$VERSION-alpha
 
 
-script: sudo tests/run.sh $VERSIONS
+script: sudo tests/run.sh $VERSION
 
 after_success:
-  - ./publish.sh $VERSIONS
+  - echo push nanobox/nanobox-docker-postgresql:$VERSION-alpha
