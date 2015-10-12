@@ -1,17 +1,19 @@
 #!/bin/bash
 FAILED=0
-for file in `find . -type f -name '*_test.*'`; do
-  echo running $file
-  FOLDER=`dirname $0`
-  read -r -d '' TEST <<EOF
+for VERSION in $@; do
+  for file in `find . -type f -name '*_test.*'`; do
+    echo running $file
+    FOLDER=`dirname $0`
+    read -r -d '' TEST <<EOF
 . $FOLDER/util/bash_help.sh
-. $file $@ 2>&1
+. $file $VERSION 2>&1 
 EOF
-  bash -c "$TEST" | awk '{print " "$0}'
-  if [ "${PIPESTATUS[0]}" != "0" ]; then
-    echo test "$file" failed to run correctly
-    let FAILED=FAILED+1
-  fi
+    bash -c "$TEST" | awk '{print " "$0}'
+    if [ "${PIPESTATUS[0]}" != "0" ]; then
+      echo test "$file" failed to run correctly
+      let FAILED=FAILED+1
+    fi
+  done
 done
 
 if [ "$FAILED" == "0" ]; then
