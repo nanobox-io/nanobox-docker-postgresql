@@ -16,4 +16,5 @@ read -r -d '' BOXFILE <<EOF
   "logtap_host":"127.0.0.1"
 }
 EOF
+echo boxfile: "$BOXFILE"
 pass "configure hook works correctly" docker exec $UUID /opt/bin/default-configure "$BOXFILE"
