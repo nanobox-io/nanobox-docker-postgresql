@@ -1,4 +1,4 @@
-## nanobox-docker-postgresql ![Build Status Image](https://travis-ci.org/#)
+## nanobox-docker-postgresql ![Build Status Image](https://travis-ci.org/nanobox-io/nanobox-docker-postgresql.svg)
 
 This repo contains the files necessary to create the postgresql docker image for [Nanobox](http://nanobox.io) consumption.
 
