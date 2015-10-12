@@ -148,6 +148,15 @@ else
 
 end
 
+boxfile[:extensions].each do |extension|
+
+  execute 'create extension' do
+    command "/data/bin/psql -c \"CREATE EXTENSION IF NOT EXISTS \\\"#{extension}\\\"\""
+    user 'gonano'
+  end
+
+end
+
 if payload[:platform] != 'local'
 
   # Setup root keys for data migrations
