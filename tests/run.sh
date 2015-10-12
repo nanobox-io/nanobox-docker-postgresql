@@ -2,7 +2,12 @@
 FAILED=0
 for file in `find . -type f -name '*_test.*'`; do
   echo running $file
-  $file $@ 2>&1 | awk '{print " "$0}'
+  FOLDER=`dirname $0`
+  read -r -d '' TEST <<EOF
+. $FOLDER/util/bash_help.sh
+. $file $@ 2>&1
+EOF
+  bash -c "$TEST" | awk '{print " "$0}'
   if [ "${PIPESTATUS[0]}" != "0" ]; then
     echo test "$file" failed to run correctly
     let FAILED=FAILED+1
