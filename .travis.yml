@@ -7,10 +7,10 @@ services:
   - docker
 
 before_install:
-  - build.sh $VERSIONS
+  - ./build.sh $VERSIONS
 
 
 script: sudo tests/run.sh $VERSIONS
 
 after_success:
-  - publish.sh $VERSIONS
+  - ./publish.sh $VERSIONS
