@@ -6,15 +6,6 @@ pass "unable to start the container" docker run --privileged=true -d --name $UUI
 defer docker kill $UUID
 
 # we should be able to run the basic configure hook
-read -r -d '' BOXFILE <<EOF
-{
-  "platform" : "local",
-  "boxfile" : {
-    "locale": "EN"
-  },
-  "uid":"$UUID",
-  "logtap_host":"127.0.0.1"
-}
-EOF
+BOXFILE={"platform" : "local","boxfile" : {"locale": "EN"},"uid":"$UUID","logtap_host":"127.0.0.1"}
 echo boxfile: "$BOXFILE"
 pass "configure hook works correctly" docker exec $UUID /opt/bin/default-configure "$BOXFILE"
