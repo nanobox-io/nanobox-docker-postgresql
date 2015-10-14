@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/gonano/bin/hookit default-configure "${1}"
