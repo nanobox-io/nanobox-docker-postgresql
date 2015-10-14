@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/gonano/bin/hookit default-stop "${1}"

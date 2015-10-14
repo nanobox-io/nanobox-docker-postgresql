@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/gonano/bin/hookit default-single-pre_export "${1}"

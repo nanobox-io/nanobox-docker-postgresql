@@ -8,11 +8,6 @@ services:
   - docker
 
 before_install:
-  - docker build -t nanobox/nanobox-docker-postgresql:$VERSION -f Dockerfile-$VERSION .
-  - docker tag -f nanobox/nanobox-docker-postgresql:$VERSION nanobox/nanobox-docker-postgresql:$VERSION-alpha
-
+  - docker build -t nanobox/nanobox-docker-postgresql:$VERSION -f Dockerfile-$VERSION .$VERSION
 
 script: sudo tests/run.sh $VERSION
-
-after_success:
-  - echo push nanobox/nanobox-docker-postgresql:$VERSION-alpha

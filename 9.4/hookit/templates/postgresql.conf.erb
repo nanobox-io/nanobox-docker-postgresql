@@ -1,0 +1,13 @@
+<% memory = memcap -%>
+listen_addresses = '0.0.0.0'
+port = 5432
+max_connections =  <%= ((memory / 128) * 200).ceil %>
+shared_buffers = <%= (memory * 0.25).ceil %>MB
+log_timezone = '<%= `date +'%Z'`.to_s.strip %>'
+datestyle = 'iso, mdy'
+timezone = '<%= `date +'%Z'`.to_s.strip %>'
+lc_messages = '<%= boxfile[:locale] %>'             # locale for system error message
+lc_monetary = '<%= boxfile[:locale] %>'             # locale for monetary formatting
+lc_numeric = '<%= boxfile[:locale] %>'              # locale for number formatting
+lc_time = '<%= boxfile[:locale] %>'                 # locale for time formatting
+default_text_search_config = 'pg_catalog.english'

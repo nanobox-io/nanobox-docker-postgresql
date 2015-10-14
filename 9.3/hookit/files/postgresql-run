@@ -1,0 +1,4 @@
+#!/bin/sh -e
+export PATH="/data/sbin:/data/bin:/opt/gonano/sbin:/opt/gonano/bin:/opt/local/sbin:/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+exec su - gonano -c '/data/bin/postgres -D /data/var/db/postgresql'

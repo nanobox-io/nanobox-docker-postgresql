@@ -1,0 +1,27 @@
+[config]
+# the directory where postgresql was installed
+data_dir=/data/var/db/postgresql
+# delay before node dicides what to do with postgresql instance
+decision_timeout=data
+# log verbosity (trace, debug, info, warn error, fatal)
+log_level=warn
+# REQUIRED - the IP:port combination of all nodes that are to be in the cluster (e.g. 'role=m.y.i.p:4400')
+<% payload[:generation][:members].map { |member| "#{member[:role]}=#{member[:local_ip]}:4400"}.each do |peer| -%>
+<%= peer %>
+<% end -%>
+# the postgresql port
+pg_port=5432
+# SmartOS REQUIRED - either 'primary', 'secondary', or 'monitor' (the cluster needs exactly one of each)
+role=<%= payload[:member][:schema][:role] %>
+# the directory where node status information is stored
+status_dir=/home/gonano/.yoke/status
+# the command you would like to use to sync the data from this node to the other when this node is master
+sync_command=rsync -ae "ssh -o StrictHostKeyChecking=no" --delete {{local_dir}} {{slave_ip}}:{{slave_dir}}
+
+[vip]
+# Virtual Ip you would like to use
+ip=<%= payload[:service][:ips][:default] %>
+# Command to use when adding the vip. This will be called as {{add_command}} {{vip}}
+add_command=/opt/local/bin/sudo /opt/gonano/lib/yoke/ip_up.sh vxlan0
+# Command to use when removing the vip. This will be called as {{remove_command}} {{vip}}
+remove_command=/opt/local/bin/sudo /opt/gonano/lib/yoke/ip_down.sh vxlan0

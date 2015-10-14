@@ -1,0 +1,14 @@
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+# "local" is for Unix domain socket connections only
+local   all             all                                     trust
+
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            trust
+host    all             gonano          192.168.0.0/16          trust
+host    gonano          <%= user %>     192.168.0.0/16          md5
+host    gonano          <%= user %>     172.16.0.0/12           md5
+
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     gonano                                trust
+host    replication     gonano        192.168.0.0/16          trust
