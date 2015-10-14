@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/gonano/bin/hookit local-configure "${1}"
