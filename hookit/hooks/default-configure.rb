@@ -123,10 +123,10 @@ if payload[:platform] == 'local'
     not_if { `/data/bin/psql -U gonano -t -c "SELECT * FROM has_database_privilege('nanobox', 'gonano', 'create');"`.to_s.strip == 't' }
   end
 
-  execute "allow nanobox user to create databases" do
+  execute "escalate nanobox user to be a super user" do
     command "/data/bin/psql -c 'ALTER USER nanobox CREATEDB;'"
     user 'gonano'
-    not_if { `/data/bin/psql -U gonano -t -c "SELECT rolcreatedb FROM pg_authid WHERE rolname = 'nanobox';"`.to_s.strip == 't' }
+    not_if { `/data/bin/psql -U gonano -t -c "SELECT rolsuper FROM pg_authid WHERE rolname = 'nanobox';"`.to_s.strip == 't' }
   end
 
 else
