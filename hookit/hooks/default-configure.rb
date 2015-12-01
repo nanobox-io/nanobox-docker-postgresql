@@ -56,7 +56,7 @@ template '/data/var/db/postgresql/pg_hba.conf' do
   mode 0600
   owner 'gonano'
   group 'gonano'
-  variables ({ user: user, platform: platform })
+  variables ({ user: user, platform: payload[:platform] })
 end
 
 # Import service (and start)
