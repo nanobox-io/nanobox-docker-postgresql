@@ -56,7 +56,7 @@ template '/data/var/db/postgresql/pg_hba.conf' do
   mode 0600
   owner 'gonano'
   group 'gonano'
-  variables ({ user: user })
+  variables ({ user: user, platform: payload[:platform] })
 end
 
 # Import service (and start)
@@ -121,6 +121,12 @@ if payload[:platform] == 'local'
     command "/data/bin/psql -c \"GRANT ALL PRIVILEGES ON DATABASE gonano TO nanobox\""
     user 'gonano'
     not_if { `/data/bin/psql -U gonano -t -c "SELECT * FROM has_database_privilege('nanobox', 'gonano', 'create');"`.to_s.strip == 't' }
+  end
+
+  execute "escalate nanobox user to be a super user" do
+    command "/data/bin/psql -c 'ALTER USER nanobox WITH SUPERUSER;'"
+    user 'gonano'
+    not_if { `/data/bin/psql -U gonano -t -c "SELECT rolsuper FROM pg_authid WHERE rolname = 'nanobox';"`.to_s.strip == 't' }
   end
 
 else
