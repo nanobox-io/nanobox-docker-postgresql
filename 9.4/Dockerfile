@@ -21,6 +21,7 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql94-pltcl \
         postgresql94-replicationtools \
         postgresql94-server \
+        postgresql94-client \
         postgresql94-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 

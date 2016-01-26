@@ -21,6 +21,7 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql93-pltcl \
         postgresql93-replicationtools \
         postgresql93-server \
+        postgresql93-client \
         postgresql93-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 
