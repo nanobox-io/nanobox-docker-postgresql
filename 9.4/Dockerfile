@@ -11,6 +11,7 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql94-adminpack \
+        postgresql94-client \
         postgresql94-datatypes \
         postgresql94-dblink \
         postgresql94-fuzzystrmatch \
@@ -21,7 +22,6 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql94-pltcl \
         postgresql94-replicationtools \
         postgresql94-server \
-        postgresql94-client \
         postgresql94-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 

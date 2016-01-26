@@ -9,6 +9,13 @@ RUN mkdir -p /var/log/gonano
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
+        postgresql93-client && \
+    rm -rf /data/var/db/pkgin/cache
+
+# Install binaries
+RUN rm -rf /data/var/db/pkgin && \
+    /data/bin/pkgin -y up && \
+    /data/bin/pkgin -y in \
         yoke \
         postgresql93-adminpack \
         postgresql93-datatypes \
@@ -21,7 +28,6 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql93-pltcl \
         postgresql93-replicationtools \
         postgresql93-server \
-        postgresql93-client \
         postgresql93-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 
