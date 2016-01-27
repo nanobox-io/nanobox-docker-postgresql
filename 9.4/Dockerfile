@@ -5,16 +5,13 @@ FROM nanobox/runit
 # Create directories
 RUN mkdir -p /var/log/gonano
 
-# Copy files
-ADD hookit/. /opt/gonano/hookit/mod/
-ADD files/. /
-
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql94-adminpack \
+        postgresql94-client \
         postgresql94-datatypes \
         postgresql94-dblink \
         postgresql94-fuzzystrmatch \
@@ -27,6 +24,13 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql94-server \
         postgresql94-upgrade && \
     rm -rf /data/var/db/pkgin/cache
+
+# Install hooks
+RUN rm -rf /var/gonano/db/pkgin && \
+    /opt/gonano/bin/pkgin -y up && \
+    /opt/gonano/bin/pkgin -y in \
+        hooks-postgresql && \
+    rm -rf /var/gonano/db/pkgin/cache
 
 # Cleanup disk
 RUN rm -rf \

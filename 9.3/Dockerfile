@@ -5,9 +5,12 @@ FROM nanobox/runit
 # Create directories
 RUN mkdir -p /var/log/gonano
 
-# Copy files
-ADD hookit/. /opt/gonano/hookit/mod/
-ADD files/. /
+# Install binaries
+RUN rm -rf /data/var/db/pkgin && \
+    /data/bin/pkgin -y up && \
+    /data/bin/pkgin -y in \
+        postgresql93-client && \
+    rm -rf /data/var/db/pkgin/cache
 
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
@@ -27,6 +30,13 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql93-server \
         postgresql93-upgrade && \
     rm -rf /data/var/db/pkgin/cache
+
+# Install hooks
+RUN rm -rf /var/gonano/db/pkgin && \
+    /opt/gonano/bin/pkgin -y up && \
+    /opt/gonano/bin/pkgin -y in \
+        hooks-postgresql && \
+    rm -rf /var/gonano/db/pkgin/cache
 
 # Cleanup disk
 RUN rm -rf \
