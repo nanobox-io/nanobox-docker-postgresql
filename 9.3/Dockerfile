@@ -35,7 +35,8 @@ RUN rm -rf /data/var/db/pkgin && \
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
     /opt/gonano/bin/pkgin -y in \
-        hooks-postgresql && \
+        jq \
+        hooks-update && \
     rm -rf /var/gonano/db/pkgin/cache
 
 # Cleanup disk
