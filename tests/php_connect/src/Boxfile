@@ -6,8 +6,8 @@ web1:
 postgresql1:
   name: database1
   version: 9.4
-  stability: alpha
+  stability: stable
 postgresql2:
   name: database2
   version: 9.3
-  stability: alpha
+  stability: stable
