@@ -16,6 +16,13 @@ RUN rm -rf /data/var/db/pkgin && \
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
+        postgresql93-client && \
+    rm -rf /data/var/db/pkgin/cache
+
+# Install binaries
+RUN rm -rf /data/var/db/pkgin && \
+    /data/bin/pkgin -y up && \
+    /data/bin/pkgin -y in \
         yoke \
         postgresql93-adminpack \
         postgresql93-datatypes \
