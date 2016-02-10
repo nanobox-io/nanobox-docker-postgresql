@@ -18,6 +18,7 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql93-adminpack \
+        postgresql93-contrib \
         postgresql93-datatypes \
         postgresql93-dblink \
         postgresql93-fuzzystrmatch \
