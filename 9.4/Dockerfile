@@ -15,6 +15,7 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql94-adminpack \
+        postgresql94-contrib \
         postgresql94-datatypes \
         postgresql94-dblink \
         postgresql94-fuzzystrmatch \
