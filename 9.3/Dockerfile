@@ -42,7 +42,7 @@ RUN rm -rf /data/var/db/pkgin && \
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
     /opt/gonano/bin/pkgin -y in \
-        rsync \
+        rsync && \
     rm -rf /var/gonano/db/pkgin/cache
 
 # Cleanup disk
