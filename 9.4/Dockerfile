@@ -32,6 +32,12 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql94-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 
+RUN rm -rf /var/gonano/db/pkgin && \
+    /opt/gonano/bin/pkgin -y up && \
+    /opt/gonano/bin/pkgin -y in \
+        rsync \
+    rm -rf /var/gonano/db/pkgin/cache
+
 # Cleanup disk
 RUN rm -rf \
         /var/lib/apt/lists/* \
