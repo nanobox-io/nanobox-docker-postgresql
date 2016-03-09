@@ -20,9 +20,6 @@ RUN rm -rf /data/var/db/pkgin && \
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
-        luvit-0.10.0 \
-        flip \
-        flip-scripts \
         yoke \
         postgresql93-adminpack \
         postgresql93-contrib \

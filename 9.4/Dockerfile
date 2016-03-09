@@ -13,9 +13,6 @@ ADD files/. /
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
-        luvit-0.10.0 \
-        flip \
-        flip-scripts \
         yoke \
         postgresql94-adminpack \
         postgresql94-contrib \
