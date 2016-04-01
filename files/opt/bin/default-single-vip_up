@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/opt/gonano/bin/hookit default-single-vip_up "${1}"
