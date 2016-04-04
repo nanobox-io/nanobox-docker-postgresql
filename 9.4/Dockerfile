@@ -5,10 +5,6 @@ FROM nanobox/runit
 # Create directories
 RUN mkdir -p /var/log/gonano
 
-# Copy files
-ADD hookit/. /opt/gonano/hookit/mod/
-ADD files/. /
-
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
@@ -34,6 +30,20 @@ RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y in \
         rsync && \
     rm -rf /var/gonano/db/pkgin/cache
+
+# Install hooks
+RUN mkdir -p /opt/nanobox/hooks && \
+    mkdir -p /var/nanobox && \
+    curl \
+      -f \
+      -k \
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.tgz \
+        | tar -xz -C /opt/nanobox/hooks && \
+    curl \
+      -f \
+      -k \
+      -o /var/nanobox/hooks.md5 \
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.md5
 
 # Cleanup disk
 RUN rm -rf \
