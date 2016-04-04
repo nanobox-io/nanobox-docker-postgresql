@@ -10,4 +10,4 @@ services:
 before_install:
   - docker build -t nanobox/nanobox-docker-postgresql:$VERSION ./$VERSION
 
-script: sudo tests/run.sh $VERSION
+script: sudo test/run_all.sh $VERSION
