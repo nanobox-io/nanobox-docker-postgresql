@@ -32,6 +32,9 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql93-upgrade && \
     rm -rf /data/var/db/pkgin/cache
 
+# Install yoke scripts
+ADD files/. /
+
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
     /opt/gonano/bin/pkgin -y in \
