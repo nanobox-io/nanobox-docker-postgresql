@@ -44,8 +44,10 @@ Vagrant.configure(2) do |config|
     cd /vagrant
     docker build -t nanobox/postgresql:9.3 --no-cache=true 9.3
     docker tag -f nanobox/postgresql:9.3 nanobox/postgresql:9.3
-      docker build -t nanobox/postgresql:9.4 --no-cache=true 9.4
+    docker build -t nanobox/postgresql:9.4 --no-cache=true 9.4
     docker tag -f nanobox/postgresql:9.4 nanobox/postgresql:9.4
+    docker build -t nanobox/postgresql:9.5 --no-cache=true 9.5
+    docker tag -f nanobox/postgresql:9.5 nanobox/postgresql:9.5
   SCRIPT
 
 end
