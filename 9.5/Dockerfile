@@ -6,31 +6,23 @@ FROM nanobox/runit
 RUN mkdir -p /var/log/gonano
 
 # Install binaries
-# RUN rm -rf /data/var/db/pkgin && \
-#     /data/bin/pkgin -y up && \
-#     /data/bin/pkgin -y in \
-#         postgresql93-client && \
-#     rm -rf /data/var/db/pkgin/cache
-
-# Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
-    /data/bin/pkgin -y in postgresql93-client && \
+    /data/bin/pkgin -y in postgresql95-client && \
     /data/bin/pkgin -y in \
         yoke \
-        postgresql93-adminpack \
-        postgresql93-contrib \
-        postgresql93-datatypes \
-        postgresql93-dblink \
-        postgresql93-fuzzystrmatch \
-        postgresql93-monitoring \
-        postgresql93-pgcrypto \
-        postgresql93-plperl \
-        postgresql93-plpython \
-        postgresql93-pltcl \
-        postgresql93-replicationtools \
-        postgresql93-server \
-        postgresql93-upgrade && \
+        postgresql95-adminpack \
+        postgresql95-contrib \
+        postgresql95-datatypes \
+        postgresql95-dblink \
+        postgresql95-fuzzystrmatch \
+        postgresql95-monitoring \
+        postgresql95-pgcrypto \
+        postgresql95-plperl \
+        postgresql95-plpython \
+        postgresql95-pltcl \
+        postgresql95-replicationtools \
+        postgresql95-server && \
     rm -rf /data/var/db/pkgin/cache
 
 # Install yoke scripts
