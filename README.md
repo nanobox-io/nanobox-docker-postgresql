@@ -3,7 +3,7 @@
 This is an PostgreSQL Docker image used to launch a PostgreSQL service on Nanobox. To use this image, add a data component to your `boxfile.yml` with the `nanobox/postgresql` image specified:
 
 ```yaml
-data:
+data.db:
   image: nanobox/postgresql
 ```
 
@@ -22,7 +22,7 @@ When configuring a PostgreSQL service in your boxfile.yml, you can specify which
 #### version
 ```yaml
 # default setting
-data:
+data.db:
   image: nanobox/postgresql
   config:
     version: 9.4
