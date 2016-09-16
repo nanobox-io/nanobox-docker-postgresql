@@ -8,7 +8,7 @@ RUN mkdir -p /var/log/gonano
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
-    /data/bin/pkgin -y in postgresql95-client && \
+    /data/bin/pkgin -y in perl-5.22 postgresql95-client && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql95-adminpack \
@@ -40,13 +40,13 @@ RUN mkdir -p /opt/nanobox/hooks && \
     curl \
       -f \
       -k \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.tgz \
+      https://d1ormdui8qdvue.cloudfront.net/hooks/postgresql-stable.tgz \
         | tar -xz -C /opt/nanobox/hooks && \
     curl \
       -f \
       -k \
       -o /var/nanobox/hooks.md5 \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.md5
+      https://d1ormdui8qdvue.cloudfront.net/hooks/postgresql-stable.md5
 
 # Cleanup disk
 RUN rm -rf \
