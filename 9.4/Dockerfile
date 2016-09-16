@@ -8,7 +8,7 @@ RUN mkdir -p /var/log/gonano
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
-    /data/bin/pkgin -y in postgresql94-client && \
+    /data/bin/pkgin -y in perl-5.22 postgresql94-client && \
     /data/bin/pkgin -y in \
         yoke \
         postgresql94-adminpack \
