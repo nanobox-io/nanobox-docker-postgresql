@@ -48,13 +48,13 @@ RUN mkdir -p /opt/nanobox/hooks && \
     curl \
       -f \
       -k \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.tgz \
+      https://d1ormdui8qdvue.cloudfront.net/hooks/postgresql-stable.tgz \
         | tar -xz -C /opt/nanobox/hooks && \
     curl \
       -f \
       -k \
       -o /var/nanobox/hooks.md5 \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/postgresql-stable.md5
+      https://d1ormdui8qdvue.cloudfront.net/hooks/postgresql-stable.md5
 
 # Cleanup disk
 RUN rm -rf \
