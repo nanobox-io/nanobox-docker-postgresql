@@ -5,6 +5,12 @@ FROM nanobox/runit
 # Create directories
 RUN mkdir -p /var/log/gonano
 
+# Install arping
+RUN apt-get update -qq && \
+    apt-get install -y iputils-arping && \
+    apt-get clean all && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
