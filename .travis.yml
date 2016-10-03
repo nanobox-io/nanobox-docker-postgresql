@@ -16,7 +16,7 @@ script: sudo test/run_all.sh $VERSION
 after_success:
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-  - docker build -t ${NAMESPACE}/postgresql ./${VERSION}
+  - docker build -t ${NAMESPACE}/postgresql ./${VERSION};
   - docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION}-beta;
   - docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION}-beta;
   - if [ "$VERSION" == "9.5" ]; then
@@ -26,7 +26,7 @@ after_success:
   - if [ "$BRANCH" == "master" ]; then
     if [ "$VERSION" == "9.5" ]; then
     docker push ${REMOTE}${NAMESPACE}/postgresql;
-    fi
+    fi;
     docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION};
     docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION};
     else
