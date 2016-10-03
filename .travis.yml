@@ -12,3 +12,24 @@ before_install:
   - docker build -t nanobox/postgresql:$VERSION ./$VERSION
 
 script: sudo test/run_all.sh $VERSION
+
+after_success:
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - docker build -t ${NAMESPACE}/postgresql ./${VERSION}
+  - docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION}-beta;
+  - docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION}-beta;
+  - if [ "$VERSION" == "9.5" ]; then
+    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:beta;
+    docker push ${REMOTE}${NAMESPACE}/postgresql;
+    fi
+  - if [ "$BRANCH" == "master" ]; then
+    if [ "$VERSION" == "9.5" ]; then
+    docker push ${REMOTE}${NAMESPACE}/postgresql;
+    fi
+    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION};
+    docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION};
+    else
+    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION}-${BRANCH//\//_};
+    docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION}-${BRANCH//\//_};
+    fi
