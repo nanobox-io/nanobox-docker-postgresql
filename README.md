@@ -1,4 +1,4 @@
-# PostgreSQL ![Build Status Image](https://travis-ci.org/nanobox-io/nanobox-docker-postgresql.svg)
+# PostgreSQL [![Build Status Image](https://travis-ci.org/nanobox-io/nanobox-docker-postgresql.svg)](https://travis-ci.org/nanobox-io/nanobox-docker-postgresql)
 
 This is an PostgreSQL Docker image used to launch a PostgreSQL service on Nanobox. To use this image, add a data component to your `boxfile.yml` with the `nanobox/postgresql` image specified:
 
