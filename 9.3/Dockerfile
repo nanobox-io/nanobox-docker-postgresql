@@ -14,7 +14,7 @@ RUN mkdir -p /var/log/gonano
 
 # Install arping
 RUN apt-get update -qq && \
-    apt-get install -y iputils-arping && \
+    apt-get install -y iputils-arping cron && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
@@ -47,6 +47,8 @@ RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y in \
         rsync && \
     rm -rf /var/gonano/db/pkgin/cache
+
+RUN /opt/gonano/bin/gem install remote_syslog_logger
 
 # Install hooks
 RUN mkdir -p /opt/nanobox/hooks && \
