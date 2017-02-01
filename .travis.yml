@@ -9,6 +9,8 @@ services:
   - docker
 
 before_install:
+  - sudo apt-get -y install python-pip
+  - sudo pip install docker-squash
   - docker build -t nanobox/postgresql:$VERSION ./$VERSION
 
 script: sudo test/run_all.sh $VERSION
@@ -18,23 +20,25 @@ after_success:
   - "echo \"Branch: '$BRANCH'; Version: '$VERSION'\";"
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   - docker build -t ${NAMESPACE}/postgresql ./${VERSION};
+  - docker-squash -t ${NAMESPACE}/postgresql:squashed -f nanobox/runit --tmp-dir /var/tmp/squasher ${NAMESPACE}/postgresql
   # `$VERSION-beta` tag is always pushed (master or any dev branch)
-  - docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION}-beta;
+  - docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql:${VERSION}-beta;
   - docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION}-beta;
   # `beta` tag is always pushed (master or any dev branch)
   - if [ "$VERSION" == "9.5" ]; then
-    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:beta;
+    docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql:beta;
     docker push ${REMOTE}${NAMESPACE}/postgresql:beta;
     fi
   # `latest` tag is only pushed on master && most recent version
   - if [ "$BRANCH" == "master" ] && [ "$VERSION" == "9.5" ]; then
+    docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql;
     docker push ${REMOTE}${NAMESPACE}/postgresql;
     fi
   # `$VERSION` (latest/stable implied) tag is only pushed on master. tag branch for clarity otherwise (`$VERSION-$BRANCH`)
   - if [ "$BRANCH" == "master" ]; then
-    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION};
+    docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql:${VERSION};
     docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION};
     else
-    docker tag ${NAMESPACE}/postgresql ${NAMESPACE}/postgresql:${VERSION}-${BRANCH//\//_};
+    docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql:${VERSION}-${BRANCH//\//_};
     docker push ${REMOTE}${NAMESPACE}/postgresql:${VERSION}-${BRANCH//\//_};
     fi
