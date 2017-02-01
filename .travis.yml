@@ -31,6 +31,7 @@ after_success:
     fi
   # `latest` tag is only pushed on master && most recent version
   - if [ "$BRANCH" == "master" ] && [ "$VERSION" == "9.5" ]; then
+    docker tag ${NAMESPACE}/postgresql:squashed ${NAMESPACE}/postgresql;
     docker push ${REMOTE}${NAMESPACE}/postgresql;
     fi
   # `$VERSION` (latest/stable implied) tag is only pushed on master. tag branch for clarity otherwise (`$VERSION-$BRANCH`)
