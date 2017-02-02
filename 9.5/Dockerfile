@@ -11,6 +11,8 @@ RUN apt-get update -qq && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
+USER gonano
+
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
@@ -33,6 +35,8 @@ RUN rm -rf /data/var/db/pkgin && \
 
 # Install yoke scripts
 ADD files/. /
+
+USER root
 
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
@@ -61,9 +65,6 @@ RUN rm -rf \
         /var/lib/apt/lists/* \
         /tmp/* \
         /var/tmp/*
-
-# Set permissions on /data
-RUN chown -R gonano:gonano /data
 
 # Run runit automatically
 CMD [ "/opt/gonano/bin/nanoinit" ]
