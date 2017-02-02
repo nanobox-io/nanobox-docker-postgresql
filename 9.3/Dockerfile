@@ -70,5 +70,8 @@ RUN rm -rf \
         /tmp/* \
         /var/tmp/*
 
+# Set permissions on /data
+RUN chown -R gonano:gonano /data
+
 # Run runit automatically
 CMD [ "/opt/gonano/bin/nanoinit" ]
