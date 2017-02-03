@@ -46,6 +46,8 @@ ADD files/. /
 
 USER root
 
+RUN chown gonano:gonano /data /data/lib /data/lib/yoke /data/lib/yoke/ip_down.sh /data/lib/yoke/ip_up.sh
+
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
     /opt/gonano/bin/pkgin -y in \
