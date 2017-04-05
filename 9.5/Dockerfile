@@ -19,17 +19,10 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in perl-5.24 postgresql95-client && \
     /data/bin/pkgin -y in \
         yoke \
-        postgresql95-adminpack \
         postgresql95-contrib \
-        postgresql95-datatypes \
-        postgresql95-dblink \
-        postgresql95-fuzzystrmatch \
-        postgresql95-monitoring \
-        postgresql95-pgcrypto \
         postgresql95-plperl \
         postgresql95-plpython \
         postgresql95-pltcl \
-        postgresql95-replicationtools \
         postgresql95-server && \
     rm -rf /data/var/db/pkgin/cache
 
