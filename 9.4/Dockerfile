@@ -19,19 +19,11 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in perl-5.24 postgresql94-client && \
     /data/bin/pkgin -y in \
         yoke \
-        postgresql94-adminpack \
         postgresql94-contrib \
-        postgresql94-datatypes \
-        postgresql94-dblink \
-        postgresql94-fuzzystrmatch \
-        postgresql94-monitoring \
-        postgresql94-pgcrypto \
         postgresql94-plperl \
         postgresql94-plpython \
         postgresql94-pltcl \
-        postgresql94-replicationtools \
-        postgresql94-server \
-        postgresql94-upgrade && \
+        postgresql94-server && \
     rm -rf /data/var/db/pkgin/cache
 
 # Install yoke scripts
