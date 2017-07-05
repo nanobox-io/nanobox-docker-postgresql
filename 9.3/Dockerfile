@@ -23,6 +23,7 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql93-plperl \
         postgresql93-plpython \
         postgresql93-pltcl \
+        postgresql93-postgis \
         postgresql93-server && \
     rm -rf /data/var/db/pkgin/cache
 
