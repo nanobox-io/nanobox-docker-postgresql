@@ -23,6 +23,7 @@ RUN rm -rf /data/var/db/pkgin && \
         postgresql95-plperl \
         postgresql95-plpython \
         postgresql95-pltcl \
+        postgresql95-postgis \
         postgresql95-server && \
     rm -rf /data/var/db/pkgin/cache
 
