@@ -29,11 +29,61 @@ data.db:
     version: 9.4
 ```
 
+### Custom Users/Permissions/Databases
+You can create custom users with custom permissions as well as additional databases.
+
+```yaml
+data.postgresql:
+  image: nanobox/postgresql:9.5
+  config:
+    users:
+    - username: customuser
+      meta:
+        privileges:
+        - privilege: ALL PRIVILEGES
+          type: DATABASE
+          'on': gonano
+          grant: true
+        - privilege: ALL PRIVILEGES
+          type: DATABASE
+          'on': customdb
+          grant: true
+        roles:
+        - SUPERUSER
+```
+
+For each custom user specified, Nanobox will generate an environment variable for the user's password using the following pattern:
+
+```yaml
+# Pattern
+COMPONENT_ID_USERNAME_PASS
+
+# Examples
+
+## Custom user config 1
+data.postgres:
+  config:
+    users:
+      - username: customuser
+
+## Generated password evar 1
+DATA_POSTGRES_CUSTOMUSER_PASS
+
+## Custom user config 2
+data.db:
+  config:
+    users:
+      - username: dbuser
+
+## Generated password evar 2
+DATA_DB_DBUSER_PASS
+```
+
 ## Request PostgreSQL Boxfile Configs
 One of the many benefits of using PostgreSQL is that it doesn't require much configuration. The project itself is finely tuned. However we know there are settings that users may want to tweak. If there's a setting you'd like to modify that is typically handled in the postresql.conf, please let us know by creating a [new issue on this project](https://github.com/nanobox-io/nanobox-docker-postgresql/issues/new).
 
 ## Help & Support
-This is a PostgreSQL Docker image provided by [Nanobox](http://nanobox.io). If you need help with this image, you can reach out to us in the [#nanobox IRC channel](http://webchat.freenode.net/?channels=nanobox). If you are running into an issue with the image, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-docker-postgresql/issues/new).
+This is a PostgreSQL Docker image provided by [Nanobox](http://nanobox.io). If you need help with this image, you can reach out to us in the [Nanobox Slack channel](http://nanoboxio.slack.com). If you are running into an issue with the image, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-docker-postgresql/issues/new).
 
 ## License
 Mozilla Public License, version 2.0
