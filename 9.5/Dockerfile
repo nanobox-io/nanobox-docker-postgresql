@@ -16,8 +16,8 @@ USER gonano
 # Install binaries
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
-    /data/bin/pkgin -y in perl-5.24 postgresql95-client && \
-    /data/bin/pkgin -y in \
+    /data/bin/pkgin -yV in perl-5.24 postgresql95-client && \
+    /data/bin/pkgin -yV in \
         yoke \
         postgresql95-contrib \
         postgresql95-plperl \
@@ -36,7 +36,7 @@ RUN chown gonano:gonano /data /data/lib /data/lib/yoke /data/lib/yoke/ip_down.sh
 
 RUN rm -rf /var/gonano/db/pkgin && \
     /opt/gonano/bin/pkgin -y up && \
-    /opt/gonano/bin/pkgin -y in \
+    /opt/gonano/bin/pkgin -yV in \
         rsync && \
     rm -rf /var/gonano/db/pkgin/cache
 
