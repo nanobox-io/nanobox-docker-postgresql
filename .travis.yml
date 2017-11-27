@@ -10,11 +10,18 @@ services:
   - docker
 
 before_install:
+  - sudo apt-get -y purge docker-engine
+  - bash <(curl -fsSL https://get.docker.com/)
+  - docker version
+  - docker network create --driver=bridge --subnet=192.168.0.0/16 --opt="com.docker.network.driver.mtu=1450" --opt="com.docker.network.bridge.name=redd0" nanobox
   - sudo apt-get -y install python-pip
   - sudo pip install docker-squash
+  - git clone https://github.com/nanobox-io/nanobox-hooks-postgresql.git hooks
   - docker build -t nanobox/postgresql:$VERSION ./$VERSION
 
-script: sudo test/run_all.sh $VERSION
+script:
+  - sudo stdbuf -oL test/run_all.sh $VERSION
+  - sudo stdbuf -oL hooks/test/run_all.sh ${VERSION}
 
 after_success:
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
