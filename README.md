@@ -4,7 +4,7 @@ This is an PostgreSQL Docker image used to launch a PostgreSQL service on Nanobo
 
 ```yaml
 data.db:
-  image: nanobox/postgresql
+  image: nanobox/postgresql:9.5
 ```
 
 ## PostgreSQL Configuration Options
@@ -19,15 +19,6 @@ When configuring a PostgreSQL service in your boxfile.yml, you can specify which
 - 9.6
 
 **Note:** PostgreSQL versions cannot be changed after the service is created. To use a different version, you'll have to create a new PostgreSQL service.
-
-#### version
-```yaml
-# default setting
-data.db:
-  image: nanobox/postgresql
-  config:
-    version: 9.4
-```
 
 ### Custom Users/Permissions/Databases
 You can create custom users with custom permissions as well as additional databases.
