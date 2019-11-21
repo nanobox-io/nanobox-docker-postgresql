@@ -5,6 +5,9 @@ env:
   - VERSION=9.4
   - VERSION=9.5
   - VERSION=9.6
+  - VERSION=10
+  - VERSION=11
+  - VERSION=12
 
 services:
   - docker

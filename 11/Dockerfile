@@ -17,14 +17,14 @@ USER gonano
 RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y up && \
     /data/bin/pkgin -y in \
-        postgresql10-client \
-        postgresql10-contrib \
-        postgresql10-pgroonga \
-        postgresql10-plperl \
-        postgresql10-plpython \
-        postgresql10-pltcl \
-        postgresql10-postgis \
-        postgresql10-server && \
+        postgresql11-client \
+        postgresql11-contrib \
+        postgresql11-pgroonga \
+        postgresql11-plperl \
+        postgresql11-plpython \
+        postgresql11-pltcl \
+        postgresql11-postgis \
+        postgresql11-server && \
     rm -rf /data/var/db/pkgin/cache
 
 USER root
