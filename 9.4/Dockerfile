@@ -19,6 +19,7 @@ RUN rm -rf /data/var/db/pkgin && \
     /data/bin/pkgin -y in \
         postgresql94-client \
         postgresql94-contrib \
+        postgresql94-pgroonga \
         postgresql94-plperl \
         postgresql94-plpython \
         postgresql94-pltcl \
